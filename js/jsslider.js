@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sliderWrapper.parentElement.addEventListener('mouseenter', stopAutoSlide);
     sliderWrapper.parentElement.addEventListener('mouseleave', startAutoSlide);
-
+   
     Promise.all(
       images.map(img => {
         return new Promise(resolve => {
@@ -64,19 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       })
     ).then(() => {
-     
       setTimeout(() => {
         updateSlider();
         startAutoSlide();
-      }, 300); 
+      }, 1000);
     });
   }
-  
+
   if (images.length > 0) {
     initSlider();
   }
 });
-
 });
 
 
