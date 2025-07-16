@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   const sliderWrapper = document.getElementById('sliderWrapper');
   const images = Array.from(sliderWrapper.querySelectorAll('.slider-img'));
   const dotsContainer = document.getElementById('sliderDots');
@@ -28,9 +28,10 @@ window.addEventListener('load', () => {
       }
 
       const selectedImage = images[currentIndex];
-      const wrapperParent = sliderWrapper.parentElement;
+      const wrapper = sliderWrapper;
+      const wrapperParent = wrapper.parentElement;
       const offset = -(selectedImage.offsetLeft - (wrapperParent.clientWidth - selectedImage.clientWidth) / 2);
-      sliderWrapper.style.transform = `translateX(${offset}px)`;
+      wrapper.style.transform = translateX(${offset}px);
     };
 
     const goToSlide = index => {
@@ -52,18 +53,23 @@ window.addEventListener('load', () => {
     sliderWrapper.parentElement.addEventListener('mouseenter', stopAutoSlide);
     sliderWrapper.parentElement.addEventListener('mouseleave', startAutoSlide);
 
-    setTimeout(() => {
+    Promise.all(
+      images.map(img => {
+        return new Promise(resolve => {
+          if (img.complete && img.naturalWidth > 0) {
+            resolve();
+          } else {
+            img.onload = img.onerror = () => resolve();
+          }
+        });
+      })
+    ).then(() => {
       updateSlider();
       startAutoSlide();
-    }, 200);
+    });
   }
 
   if (images.length > 0) {
     initSlider();
   }
 });
-
-});
-
-
-
