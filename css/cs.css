@@ -1,0 +1,229 @@
+body {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 40px;
+  background-color: #020724;
+  font-family: 'Press Start 2P', cursive;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.ready-or-not h1 {
+  color: #00fff7;
+  text-align: center;
+  padding-top: 65px;
+  font-size: 45px;
+  text-shadow: 0 0 7px #00fff7;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.stray h1 {
+  color: #00fff7;
+  text-align: center;
+  padding-top: 65px;
+  font-size: 45px;
+  text-shadow: 0 0 7px #00fff7;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.repo h1 {
+  color: #00fff7;
+  text-align: center;
+  padding-top: 65px;
+  font-size: 45px;
+  text-shadow: 0 0 7px #00fff7;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.cooking-simulator h1 {
+  color: #00fff7;
+  text-align: center;
+  padding-top: 65px;
+  font-size: 45px;
+  text-shadow: 0 0 7px #00fff7;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+.lethal h1 {
+  color: #00fff7;
+  text-align: center;
+  padding-top: 65px;
+  font-size: 45px;
+  text-shadow: 0 0 7px #00fff7;
+  animation: floatTitle 3s ease-in-out infinite;
+}
+
+@keyframes floatTitle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.carousel {
+  background-color: #00051f;
+  padding: 60px 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-slider {
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+
+.slider-img {
+  width: 330px !important;
+  height: 200px !important;
+  min-width: 330px;
+  min-height: 200px;
+  max-width: 330px;
+  max-height: 200px;
+  object-fit: cover;
+  margin: 0 10px;
+  border-radius: 10px;
+  border: 4px solid #00fff7;
+  opacity: 0.6;
+  transform: scale(0.85);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.slider-img.active {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.slider-dots {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.slider-dots .dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  background-color: #00fff7;
+  border-radius: 50%;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.slider-dots .dot.active {
+  opacity: 1;
+}
+
+.description {
+  text-align: center;
+  padding: 45px 150px;
+  font-size: 15px;
+  color: #ffffff;
+  line-height: 40px;
+  margin-bottom: -40px;
+}
+
+.download-box {
+  text-align: center;
+  margin: 20px;
+  margin-bottom: 40px;
+}
+
+.download-box a {
+  background-color: #00fff7;
+  color: #00051f;
+  padding: 30px 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.download-box a:hover {
+  background-color: #ffffff;
+  color: #000;
+  box-shadow: 0 0 15px #00fff7;
+}
+
+.star {
+text-align: center;
+font-size: 35px;
+margin-bottom: 10px;
+}
+
+.return-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.return-btn a {
+  color: #00fff7;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 15px 20px;
+  border: 2px solid #00fff7;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.return-btn a:hover {
+  background-color: #00fff7;
+  color: #000;
+}
+
+img.slider-img {
+  width: 330px !important;
+  height: 200px !important;
+  object-fit: cover;
+}
+
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.description-box {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;     
+  gap: 30px;
+  background-color: #00051f;
+  border: 2px solid #00fff7;
+  box-shadow: 0 0 15px #00fff7;
+  border-radius: 15px;
+  padding: 30px;
+  color: #ffffff;
+  max-width: 1100px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.description-text {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.7;
+  flex: 1;
+  color: #ffffff;
+}
+
+.description-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+
