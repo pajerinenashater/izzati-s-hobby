@@ -64,14 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       })
     ).then(() => {
-      updateSlider();
-      startAutoSlide();
+     
+      setTimeout(() => {
+        updateSlider();
+        startAutoSlide();
+      }, 300); 
     });
   }
-
+  
   if (images.length > 0) {
     initSlider();
   }
+});
+
 });
 
 
