@@ -7,51 +7,90 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndex = 0;
   let interval;
 
-  dotsContainer.innerHTML = '';
-
-  images.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.classList.add('dot');
-    if (i === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToSlide(i));
-    dotsContainer.appendChild(dot);
+  let imagesLoaded = 0;
+  images.forEach(img => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) {
+          initSlider();
+        }
+      };
+      img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) {
+          initSlider();
+        }
+      };
+    }
   });
 
-  const updateSlider = () => {
-    images.forEach(img => img.classList.remove('active'));
-    images[currentIndex].classList.add('active');
+  if (imagesLoaded === images.length) {
+    initSlider();
+  }
 
-    const allDots = dotsContainer.querySelectorAll('.dot');
-    allDots.forEach(dot => dot.classList.remove('active'));
-    if (allDots[currentIndex]) {
-      allDots[currentIndex].classList.add('active');
-    }
+  function initSlider() {
+    dotsContainer.innerHTML = '';
 
-    const offset = -((images[0].clientWidth + 20) * currentIndex - (sliderWrapper.parentElement.clientWidth - images[0].clientWidth) / 2);
-    sliderWrapper.style.transform = translateX(${offset}px);
-  };
+    images.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    });
 
-  const goToSlide = index => {
-    currentIndex = index;
-    updateSlider();
-  };
+    const updateSlider = () => {
+      images.forEach(img => img.classList.remove('active'));
+      images[currentIndex].classList.add('active');
 
-  const nextSlide = () => {
-    currentIndex = (currentIndex + 1) % images.length;
-    updateSlider();
-  };
+      const allDots = dotsContainer.querySelectorAll('.dot');
+      allDots.forEach(dot => dot.classList.remove('active'));
+      if (allDots[currentIndex]) {
+        allDots[currentIndex].classList.add('active');
+      }
 
-  const startAutoSlide = () => {
-    interval = setInterval(nextSlide, 3000);
-  };
+      const selectedImage = images[currentIndex];
+      const wrapper = sliderWrapper;
+      const wrapperParent = wrapper.parentElement;
+      const offset = -(selectedImage.offsetLeft - (wrapperParent.clientWidth - selectedImage.clientWidth) / 2);
+      wrapper.style.transform = `translateX(${offset}px)`;
+    };
 
-  const stopAutoSlide = () => clearInterval(interval);
+    const goToSlide = index => {
+      currentIndex = index;
+      updateSlider();
+    };
 
-  sliderWrapper.parentElement.addEventListener('mouseenter', stopAutoSlide);
-  sliderWrapper.parentElement.addEventListener('mouseleave', startAutoSlide);
+    const nextSlide = () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateSlider();
+    };
 
-  updateSlider();
-  startAutoSlide();
+    const startAutoSlide = () => {
+      interval = setInterval(nextSlide, 3000);
+    };
+
+    const stopAutoSlide = () => clearInterval(interval);
+
+    sliderWrapper.parentElement.addEventListener('mouseenter', stopAutoSlide);
+    sliderWrapper.parentElement.addEventListener('mouseleave', startAutoSlide);
+
+    const ensureImageReady = (callback) => {
+      const activeImage = images[currentIndex];
+      if (activeImage.complete && activeImage.naturalWidth > 0) {
+        callback();
+      } else {
+        setTimeout(() => ensureImageReady(callback), 100);
+      }
+    };
+
+    ensureImageReady(() => {
+      updateSlider();
+      startAutoSlide();
+    });
+  }
 });
-
 
