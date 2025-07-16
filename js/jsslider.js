@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const sliderWrapper = document.getElementById('sliderWrapper');
   const images = Array.from(sliderWrapper.querySelectorAll('.slider-img'));
@@ -90,10 +91,5 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSlider();
       startAutoSlide();
     });
-  }
-});
-
-  if (images.length > 0) {
-    initSlider();
   }
 });
