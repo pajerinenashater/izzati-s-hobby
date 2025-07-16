@@ -6,6 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndex = 0;
   let interval;
 
+  let imagesLoaded = 0;
+  images.forEach(img => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) {
+          initSlider();
+        }
+      };
+      img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) {
+          initSlider();
+        }
+      };
+    }
+  });
+
+  if (imagesLoaded === images.length) {
+    initSlider();
+  }
+
   function initSlider() {
     dotsContainer.innerHTML = '';
 
@@ -31,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const wrapper = sliderWrapper;
       const wrapperParent = wrapper.parentElement;
       const offset = -(selectedImage.offsetLeft - (wrapperParent.clientWidth - selectedImage.clientWidth) / 2);
-      wrapper.style.transform = translateX(${offset}px);
+      wrapper.style.transform = `translateX(${offset}px)`;
     };
 
     const goToSlide = index => {
@@ -53,21 +77,21 @@ document.addEventListener('DOMContentLoaded', () => {
     sliderWrapper.parentElement.addEventListener('mouseenter', stopAutoSlide);
     sliderWrapper.parentElement.addEventListener('mouseleave', startAutoSlide);
 
-    Promise.all(
-      images.map(img => {
-        return new Promise(resolve => {
-          if (img.complete && img.naturalWidth > 0) {
-            resolve();
-          } else {
-            img.onload = img.onerror = () => resolve();
-          }
-        });
-      })
-    ).then(() => {
+    const ensureImageReady = (callback) => {
+      const activeImage = images[currentIndex];
+      if (activeImage.complete && activeImage.naturalWidth > 0) {
+        callback();
+      } else {
+        setTimeout(() => ensureImageReady(callback), 100);
+      }
+    };
+
+    ensureImageReady(() => {
       updateSlider();
       startAutoSlide();
     });
   }
+});
 
   if (images.length > 0) {
     initSlider();
